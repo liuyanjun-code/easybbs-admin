@@ -78,7 +78,7 @@ const login = () => {
     proxy.Message.success('登陆成功', () => {
       router.push('/')
     })
-    proxy.VueCookie.set('userInfo', result.data, 0)
+    proxy.VueCookies.set("userInfo", result.data, 0)
   })
 }
 </script>
