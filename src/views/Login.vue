@@ -1,27 +1,35 @@
 <template>
   <div class="login-body">
     <div class="login-panel">
+      <div class="login-title">管理员登陆</div>
       <el-form :model="formData" :rules="rules" ref="formDataRef">
         <el-form-item prop="account">
           <el-input clearable placeholder="请输入账号" size="large" v-model.trim="formData.account">
             <template #prefix>
-              <span class="inonfont icon-account"></span>
+              <span class="iconfont icon-account"></span>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="account">
-          <el-input clearable placeholder="请输入密码" size="large" type="password" v-model.trim="formData.account">
+          <el-input clearable placeholder="请输入密码" size="large" type="password" v-model.trim="formData.password">
             <template #prefix>
-              <span class="inonfont icon-password"></span>
+              <span class="iconfont icon-password"></span>
             </template>
           </el-input>
         </el-form-item>
-        <el-form-item prop="account">
-          <el-input clearable placeholder="请输入验证码" size="large" v-model.trim="formData.account">
-            <template #prefix>
-              <span class="inonfont icon-checkcode"></span>
-            </template>
-          </el-input>
+        <el-form-item prop="checkCode">
+          <div class="check-code-panel">
+            <el-input clearable placeholder="请输入验证码" size="large" v-model.trim="formData.checkCode" class="input-panel">
+              <template #prefix>
+                <span class="iconfont icon-checkcode"></span>
+              </template>
+            </el-input>
+            <img :src="checkCodeUrl" class="check-code" @click="changeCheckCode" />
+          </div>
+
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :style="{ width: '100%' }" @click="login">登陆</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -31,14 +39,89 @@
 <script setup>
 import { ref, reactive, getCurrentInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import md5 from 'js-md5'
 const { proxy } = getCurrentInstance()
 const route = useRoute()
 const router = useRouter()
+const api = {
+  checkCode: 'api/checkCode',
+  login: '/login'
+}
+const checkCodeUrl = ref(api.checkCode)
+const changeCheckCode = () => {
+  checkCodeUrl.value = api.checkCode + '?' + new Date().getTime()
+}
 const formData = ref({});
 const formDataRef = ref();
 const rules = {
-  title: [{ required: true, message: "请输入内容" }],
-};
+  account: [{ required: true, message: "请输入账号" }],
+  password: [{ required: true, message: "请输入密码" }],
+  checkCode: [{ required: true, message: "请输入验证码" }],
+}
+const login = () => {
+  formDataRef.value.validate(async (valid) => {
+    if (!valid) {
+      return
+    }
+    let params = Object.assign({}, formData.value)
+    params.password = md5(params.password)
+    let result = await proxy.Request({
+      url: api.login,
+      params,
+      errCallback:()=>{
+        changeCheckCode()
+      }
+    })
+    if (!result) {
+      return
+    }
+    proxy.Message.success('登陆成功', () => {
+      router.push('/')
+    })
+    proxy.VueCookie.set('userInfo', result.data, 0)
+  })
+}
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+.login-body {
+  width: 100%;
+  height: calc(100vh);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-image: url(../assets/login.jpg);
+
+  .login-panel {
+    margin-top: 150px;
+    width: 350px;
+    float: right;
+    margin-right: 100px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 5px;
+    box-shadow: 2px 2px 10px #ddd;
+
+    .login-title {
+      font-size: 25px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .check-code-panel {
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      .input-panel {
+        flex: 1;
+        margin-right: 5px;
+      }
+
+      .check-code {
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>

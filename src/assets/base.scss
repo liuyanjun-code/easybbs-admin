@@ -20,3 +20,36 @@
   border-radius: 10px;
   background: #ededed;
 }
+:root {
+  --text1: #9499A0;
+  --text2: #61666d;
+  --icon: #9499a0;
+  --text_link: #089ddd;
+  --tag: #7BCDEF;
+  --pink: #FF6699;
+}
+
+.a-link {
+  text-decoration: none;
+  color: var(--text_link);
+  cursor: pointer;
+}
+
+.not-allow {
+  cursor: not-allowed;
+  color: #ddd;
+  text-decoration: none;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.el-form-item {
+  align-items: center;
+}
