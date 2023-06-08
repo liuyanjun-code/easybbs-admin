@@ -11,7 +11,13 @@
           </el-input>
         </el-form-item>
         <el-form-item prop="account">
-          <el-input clearable placeholder="请输入密码" size="large" type="password" v-model.trim="formData.password">
+          <el-input
+            clearable
+            placeholder="请输入密码"
+            size="large"
+            type="password"
+            v-model.trim="formData.password"
+          >
             <template #prefix>
               <span class="iconfont icon-password"></span>
             </template>
@@ -19,14 +25,19 @@
         </el-form-item>
         <el-form-item prop="checkCode">
           <div class="check-code-panel">
-            <el-input clearable placeholder="请输入验证码" size="large" v-model.trim="formData.checkCode" class="input-panel">
+            <el-input
+              clearable
+              placeholder="请输入验证码"
+              size="large"
+              v-model.trim="formData.checkCode"
+              class="input-panel"
+            >
               <template #prefix>
                 <span class="iconfont icon-checkcode"></span>
               </template>
             </el-input>
             <img :src="checkCodeUrl" class="check-code" @click="changeCheckCode" />
           </div>
-
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :style="{ width: '100%' }" @click="login">登陆</el-button>
@@ -45,18 +56,18 @@ const route = useRoute()
 const router = useRouter()
 const api = {
   checkCode: 'api/checkCode',
-  login: '/login'
+  login: '/login',
 }
 const checkCodeUrl = ref(api.checkCode)
 const changeCheckCode = () => {
   checkCodeUrl.value = api.checkCode + '?' + new Date().getTime()
 }
-const formData = ref({});
-const formDataRef = ref();
+const formData = ref({})
+const formDataRef = ref()
 const rules = {
-  account: [{ required: true, message: "请输入账号" }],
-  password: [{ required: true, message: "请输入密码" }],
-  checkCode: [{ required: true, message: "请输入验证码" }],
+  account: [{ required: true, message: '请输入账号' }],
+  password: [{ required: true, message: '请输入密码' }],
+  checkCode: [{ required: true, message: '请输入验证码' }],
 }
 const login = () => {
   formDataRef.value.validate(async (valid) => {
@@ -68,9 +79,9 @@ const login = () => {
     let result = await proxy.Request({
       url: api.login,
       params,
-      errCallback:()=>{
+      errCallback: () => {
         changeCheckCode()
-      }
+      },
     })
     if (!result) {
       return
@@ -78,7 +89,7 @@ const login = () => {
     proxy.Message.success('登陆成功', () => {
       router.push('/')
     })
-    proxy.VueCookies.set("userInfo", result.data, 0)
+    proxy.VueCookies.set('userInfo', result.data, 0)
   })
 }
 </script>
@@ -93,7 +104,7 @@ const login = () => {
   background-image: url(../assets/login.jpg);
 
   .login-panel {
-    margin-top: 150px;
+    margin-top: 250px;
     width: 350px;
     float: right;
     margin-right: 100px;

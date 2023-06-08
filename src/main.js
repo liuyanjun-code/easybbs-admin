@@ -19,6 +19,7 @@ import Confirm from './utils/Confirm'
 import Dialog from '@/components/Dialog.vue'
 import Avatar from '@/components/Avatar.vue'
 import Cover from '@/components/Cover.vue'
+import Table from '@/components/Table.vue'
 
 const app = createApp(App)
 app.use(router)
@@ -28,9 +29,15 @@ app.config.globalProperties.Message=Message
 app.config.globalProperties.Request=Request
 app.config.globalProperties.Utils=Utils
 app.config.globalProperties.Confirm=Confirm
-
+app.config.globalProperties.globalInfo={
+  bodyWidth:1200,
+  avatarUrl:"/api/file/getAvatar/",
+  imageUrl:'/api/file/getImage/',
+  webDomain:'http://127.0.0.1:3004/'
+}
 app.use(ElementPlus)
 app.component('Dialog',Dialog)
 app.component('Avatar',Avatar)
 app.component('Cover',Cover)
+app.component('Table',Table)
 app.mount('#app')
