@@ -1,104 +1,98 @@
 <template>
   <div>
     <div class="top-panel">
-    <el-form :model="searchFormData" label-width="50px">
-      <el-row>
-        <el-col :span="4">
-          <el-form-item label="标题" prop="titleFuzzy">
-            <el-input
-              placeholder="请输入标题"
-              v-model="searchFormData.titleFuzzy"
-              clearable
-              @keyup.native="loadDataList"
-            >
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="昵称" prop="nickNameFuzzy">
-            <el-input
-              placeholder="请输入昵称"
-              v-model="searchFormData.nickNameFuzzy"
-              clearable
-              @keyup.native="loadDataList"
-            >
-            </el-input>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="板块" prop="sex">
-            <el-cascader
-              placeholder="请选择板块"
-              :options="boardList"
-              :props="boardProps"
-              clearable
-              v-model="searchFormData.boardIds"
-              :style="{ width: '100%' }"
-            />
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="附件" prop="sex">
-            <el-select
-              v-model="searchFormData.attachmentType"
-              clearable
-              placeholder="请选择"
-              :style="{ width: '100%' }"
-            >
-              <el-option :value="1" label="有附件"></el-option>
-              <el-option :value="0" label="无附件"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4">
-          <el-form-item label="状态" prop="status">
-            <el-select
-              v-model="searchFormData.status"
-              clearable
-              placeholder="请选择状态"
-              :style="{ width: '100%' }"
-            >
-              <el-option :value="-1" label="已删除"></el-option>
-              <el-option :value="0" label="待审核"></el-option>
-              <el-option :value="1" label="已审核"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="4">
-          <el-form-item label="置顶" prop="topType">
-            <el-select
-              v-model="searchFormData.topType"
-              clearable
-              placeholder="请选择"
-              :style="{ width: '100%' }"
-            >
-              <el-option :value="0" label="未置顶"></el-option>
-              <el-option :value="1" label="已置顶"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="4" :style="{ 'padding-left': '10px' }">
-          <el-button-group>
-            <el-button type="primary" @click="loadDataList">搜索</el-button>
-            <el-button
-              type="success"
-              @click="auditBatch"
-              :disabled="selectBatchList.length == 0"
-              >批量审批</el-button
-            >
-            <el-button
-              type="danger"
-              @click="delBatch"
-              :disabled="selectBatchList.length == 0"
-              >批量删除</el-button
-            >
-          </el-button-group>
-        </el-col>
-      </el-row>
-    </el-form>
-  </div>
+      <el-form :model="searchFormData" label-width="50px">
+        <el-row>
+          <el-col :span="4">
+            <el-form-item label="标题" prop="titleFuzzy">
+              <el-input
+                placeholder="请输入标题"
+                v-model="searchFormData.titleFuzzy"
+                clearable
+                @keyup.native="loadDataList"
+              >
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="昵称" prop="nickNameFuzzy">
+              <el-input
+                placeholder="请输入昵称"
+                v-model="searchFormData.nickNameFuzzy"
+                clearable
+                @keyup.native="loadDataList"
+              >
+              </el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="板块" prop="sex">
+              <el-cascader
+                placeholder="请选择板块"
+                :options="boardList"
+                :props="boardProps"
+                clearable
+                v-model="searchFormData.boardIds"
+                :style="{ width: '100%' }"
+              />
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="附件" prop="sex">
+              <el-select
+                v-model="searchFormData.attachmentType"
+                clearable
+                placeholder="请选择"
+                :style="{ width: '100%' }"
+              >
+                <el-option :value="1" label="有附件"></el-option>
+                <el-option :value="0" label="无附件"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4">
+            <el-form-item label="状态" prop="status">
+              <el-select
+                v-model="searchFormData.status"
+                clearable
+                placeholder="请选择状态"
+                :style="{ width: '100%' }"
+              >
+                <el-option :value="-1" label="已删除"></el-option>
+                <el-option :value="0" label="待审核"></el-option>
+                <el-option :value="1" label="已审核"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
+            <el-form-item label="置顶" prop="topType">
+              <el-select
+                v-model="searchFormData.topType"
+                clearable
+                placeholder="请选择"
+                :style="{ width: '100%' }"
+              >
+                <el-option :value="0" label="未置顶"></el-option>
+                <el-option :value="1" label="已置顶"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6" :style="{ 'padding-left': '10px' }">
+            <el-button-group>
+              <el-button type="primary" @click="loadDataList">搜索</el-button>
+              <el-button type="success" @click="auditBatch" :disabled="selectBatchList.length == 0"
+                >批量审批</el-button
+              >
+              <el-button type="danger" @click="delBatch" :disabled="selectBatchList.length == 0"
+                >批量删除</el-button
+              >
+            </el-button-group>
+          </el-col>
+        </el-row>
+      </el-form>
+    </div>
     <div class="data-list">
       <Table
         ref="tableRef"
@@ -106,7 +100,7 @@
         :dataSource="tabelData"
         :fetch="loadDataList"
         :options="tableOptions"
-        @rowSelect="setRowSelected"
+        @rowSelected="setRowSelected"
       >
         <!-- 用户信息 -->
         <template #userInfo="{ index, row }">
@@ -205,11 +199,13 @@
         </template>
       </Table>
     </div>
+    <ArticleBoard ref="articleBoardRef" @reload="loadDataList"></ArticleBoard>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance } from 'vue'
+import ArticleBoard from './ArticleBoard.vue';
+import { ref, reactive, getCurrentInstance ,toRaw} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const { proxy } = getCurrentInstance()
 const route = useRoute()
@@ -217,10 +213,10 @@ const router = useRouter()
 
 const api = {
   loadDataList: '/forum/loadArticle',
-  loadBoard: "/board/loadBoard",
-  delArticle: "/forum/delArticle",
-  topArticle: "/forum/topArticle",
-  auditArticle: "/forum/auditArticle",
+  loadBoard: '/board/loadBoard',
+  delArticle: '/forum/delArticle',
+  topArticle: '/forum/topArticle',
+  auditArticle: '/forum/auditArticle',
 }
 //列表
 const columns = [
@@ -275,17 +271,26 @@ const columns = [
   },
 ]
 //搜索
-const searchFormData = reactive({});
+const searchFormData = reactive({})
 const tabelData = ref({})
 const tableOptions = {
   extHeight: 90,
-  selectType: "checkbox",
-};
+  selectType: 'checkbox',
+}
 const loadDataList = async () => {
   let params = {
     pageNo: tabelData.value.pageNo,
-    pageSize: tabelData.value.pageSize,
+    pageSize: tabelData.value.pageSize
   }
+  Object.assign(params, searchFormData);
+  params.boardIds = toRaw(params.boardIds) || [];
+  if (params.boardIds.length == 1) {
+    params.pBoardId = params.boardIds[0];
+  } else if (params.boardIds.length == 2) {
+    params.pBoardId = params.boardIds[0];
+    params.boardId = params.boardIds[1];
+  }
+  delete params.boardIds;
   let result = await proxy.Request({
     url: api.loadDataList,
     params,
@@ -299,37 +304,37 @@ const loadDataList = async () => {
 const boardProps = {
   multiple: false,
   checkStrictly: true,
-  value: "boardId",
-  label: "boardName",
-};
-const boardList = ref([]);
+  value: 'boardId',
+  label: 'boardName',
+}
+const boardList = ref([])
 const loadBoardList = async () => {
   let result = await proxy.Request({
     url: api.loadBoard,
-  });
+  })
   if (!result) {
-    return;
+    return
   }
-  boardList.value = result.data;
-};
-loadBoardList();
+  boardList.value = result.data
+}
+loadBoardList()
 
 //修改板块
-const articleBoardRef = ref();
+const articleBoardRef = ref()
 const updateBoard = (row) => {
-  articleBoardRef.value.updateBoard(row);
-};
+  articleBoardRef.value.updateBoard(row)
+}
 
 //查看附件
-const attachmenttRef = ref();
+const attachmenttRef = ref()
 const showAttachment = (nickName, articleId) => {
-  attachmenttRef.value.show(nickName, articleId);
-};
+  attachmenttRef.value.show(nickName, articleId)
+}
 //查看评论
-const commentRef = ref();
+const commentRef = ref()
 const showComment = (articleId) => {
-  commentRef.value.show(articleId);
-};
+  commentRef.value.show(articleId)
+}
 
 //审核
 const audit = (data) => {
@@ -339,13 +344,13 @@ const audit = (data) => {
       params: {
         articleIds: data.articleId,
       },
-    });
+    })
     if (!result) {
-      return;
+      return
     }
-    loadDataList();
-  });
-};
+    loadDataList()
+  })
+}
 
 //删除
 const delArticle = (data) => {
@@ -355,17 +360,17 @@ const delArticle = (data) => {
       params: {
         articleIds: data.articleId,
       },
-    });
+    })
     if (!result) {
-      return;
+      return
     }
-    loadDataList();
-  });
-};
+    loadDataList()
+  })
+}
 
 //置顶
 const topArticle = (data) => {
-  const opName = data.topType == 0 ? "设为置顶" : "取消置顶";
+  const opName = data.topType == 0 ? '设为置顶' : '取消置顶'
   proxy.Confirm(`你确定要将【${data.title}】 ${opName}`, async () => {
     let result = await proxy.Request({
       url: api.topArticle,
@@ -373,39 +378,40 @@ const topArticle = (data) => {
         topType: data.topType == 0 ? 1 : 0,
         articleId: data.articleId,
       },
-    });
+    })
     if (!result) {
-      return;
+      return
     }
-    loadDataList();
-  });
-};
-
-const selectBatchList = ref([]);
+    loadDataList()
+  })
+}
+// 批量选择
+const selectBatchList = ref([])
 const setRowSelected = (rows) => {
-  selectBatchList.value = [];
+  selectBatchList.value = []
   rows.forEach((element) => {
-    selectBatchList.value.push(element.articleId);
-  });
-};
-const tableRef = ref();
+    selectBatchList.value.push(element.articleId)
+  })
+  console.log(selectBatchList.value)
+}
 
+const tableRef = ref()
 //批量审核
 const auditBatch = (data) => {
   proxy.Confirm(`你确定要批量审核吗？`, async () => {
     let result = await proxy.Request({
       url: api.auditArticle,
       params: {
-        articleIds: selectBatchList.value.join(","),
+        articleIds: selectBatchList.value.join(','),
       },
-    });
+    })
     if (!result) {
-      return;
+      return
     }
-    tableRef.value.clearSelection();
-    loadDataList();
-  });
-};
+    tableRef.value.clearSelection()
+    loadDataList()
+  })
+}
 
 //批量删除
 const delBatch = (data) => {
@@ -413,19 +419,20 @@ const delBatch = (data) => {
     let result = await proxy.Request({
       url: api.delArticle,
       params: {
-        articleIds: selectBatchList.value.join(","),
+        articleIds: selectBatchList.value.join(','),
       },
-    });
+    })
     if (!result) {
-      return;
+      return
     }
-    tableRef.value.clearSelection();
-    loadDataList();
-  });
-};
+    tableRef.value.clearSelection()
+    loadDataList()
+  })
+}
 </script>
 
 <style lang="scss" scoped>
+
 .data-list {
   .user-info {
     display: flex;

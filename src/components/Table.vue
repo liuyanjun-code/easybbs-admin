@@ -37,12 +37,7 @@
             :width="column.width"
           >
             <template #default="scope">
-              <slot
-                :name="column.scopedSlots"
-                :index="scope.$index"
-                :row="scope.row"
-              >
-              </slot>
+              <slot :name="column.scopedSlots" :index="scope.$index" :row="scope.row"> </slot>
             </template>
           </el-table-column>
         </template>
@@ -77,9 +72,9 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
-const emit = defineEmits(["rowSelected", "rowClick"]);
+const emit = defineEmits(['rowSelected', 'rowClick'])
 const props = defineProps({
   dataSource: Object,
   showPagination: {
@@ -89,9 +84,9 @@ const props = defineProps({
   options: {
     type: Object,
     default: {
-      tableHeight:null,
-      border:false,
-      stripe:true,
+      tableHeight: null,
+      border: false,
+      stripe: true,
       extHeight: 0,
       showIndex: false,
     },
@@ -102,62 +97,62 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-});
+})
 
 //顶部 60 , 内容区域距离顶部 20， 内容上下内间距 15*2  分页区域高度 46
-const topHeight = 60 + 20 + 30 + 46;
+const topHeight = 60 + 20 + 30 + 46
 
 const tableHeight = ref(
   props.options.tableHeight
     ? props.options.tableHeight
-    : window.innerHeight - topHeight - props.options.extHeight
-);
+    : window.innerHeight - topHeight - props.options.extHeight,
+)
 
 //初始化
 const init = () => {
   if (props.initFetch && props.fetch) {
-    props.fetch();
+    props.fetch()
   }
-};
-init();
+}
+init()
 
-const dataTable = ref();
+const dataTable = ref()
 //清除选中
 const clearSelection = () => {
-  dataTable.value.clearSelection();
-};
+  dataTable.value.clearSelection()
+}
 
 //设置行选中
 const setCurrentRow = (rowKey, rowValue) => {
   let row = props.dataSource.list.find((item) => {
-    return item[rowKey] === rowValue;
-  });
-  dataTable.value.setCurrentRow(row);
-};
+    return item[rowKey] === rowValue
+  })
+  dataTable.value.setCurrentRow(row)
+}
 //将子组件暴露出去，否则父组件无法调用
-defineExpose({ setCurrentRow, clearSelection });
+defineExpose({ setCurrentRow, clearSelection })
 
 //行点击
 const handleRowClick = (row) => {
-  emit("rowClick", row);
-};
+  emit('rowClick', row)
+}
 
 //多选
 const handleSelectionChange = (row) => {
-  emit("rowSelected", row);
-};
+  emit('rowSelected', row)
+}
 
 //切换每页大小
 const handlePageSizeChange = (size) => {
-  props.dataSource.pageSize = size;
-  props.dataSource.pageNo = 1;
-  props.fetch();
-};
+  props.dataSource.pageSize = size
+  props.dataSource.pageNo = 1
+  props.fetch()
+}
 // 切换页码
 const handlePageNoChange = (pageNo) => {
-  props.dataSource.pageNo = pageNo;
-  props.fetch();
-};
+  props.dataSource.pageNo = pageNo
+  props.fetch()
+}
 </script>
 <style lang="scss">
 .pagination {

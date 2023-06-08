@@ -6,9 +6,18 @@
           <span v-if="!menuCollapse">Easybbs管理后台</span>
         </div>
         <div class="menu-panel">
-          <el-menu :default-openeds="defaultOpeneds" :collapse-transition="false" :collapse="menuCollapse"
-            class="el-menu-vertical-demo" default-active="2" background-color="#3d3c4a" text-color="#fff"
-            active-text-color="#fff" router :defaultActive="defaultActive">
+          <el-menu
+            :default-openeds="defaultOpeneds"
+            :collapse-transition="false"
+            :collapse="menuCollapse"
+            class="el-menu-vertical-demo"
+            default-active="2"
+            background-color="#3d3c4a"
+            text-color="#fff"
+            active-text-color="#fff"
+            router
+            :defaultActive="defaultActive"
+          >
             <template v-for="item in menuList">
               <el-sub-menu :index="item.path" v-if="item.children">
                 <template #title>
@@ -31,7 +40,10 @@
       </el-aside>
       <el-container>
         <el-header class="header">
-          <div :class="['op-menu', 'iconfont', menuCollapse ? 'icon-expand' : 'icon-collapse']" @click="opMenu"></div>
+          <div
+            :class="['op-menu', 'iconfont', menuCollapse ? 'icon-expand' : 'icon-collapse']"
+            @click="opMenu"
+          ></div>
           <div class="menu-bread">
             <el-breadcrumb>
               <template v-for="item in menuBreadCrumbList">
@@ -44,9 +56,18 @@
         </el-header>
         <el-main class="main-content">
           <div class="tag-content">
-            <el-tabs type="border-card" v-model="defaultActive" @tab-change="tabClick" @edit="editTab">
-              <el-tab-pane v-for="item in tabList" :name="item.path" :label="item.menuName"
-                :closable="tabList.length > 1"></el-tab-pane>
+            <el-tabs
+              type="border-card"
+              v-model="defaultActive"
+              @tab-change="tabClick"
+              @edit="editTab"
+            >
+              <el-tab-pane
+                v-for="item in tabList"
+                :name="item.path"
+                :label="item.menuName"
+                :closable="tabList.length > 1"
+              ></el-tab-pane>
             </el-tabs>
           </div>
           <div class="conetnt-body">
@@ -54,17 +75,15 @@
           </div>
         </el-main>
       </el-container>
-
     </el-container>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, nextTick, watch } from "vue"
+import { ref, reactive, getCurrentInstance, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
-const { proxy } = getCurrentInstance();
 
 // 默认展开的菜单
 const defaultOpeneds = ref([])
@@ -74,52 +93,52 @@ const defaultActive = ref()
 //系统菜单
 const menuList = [
   {
-    menuName: "内容管理",
-    icon: "icon-article",
-    path: "/forum",
+    menuName: '内容管理',
+    icon: 'icon-article',
+    path: '/forum',
     children: [
       {
-        menuName: "帖子管理",
-        path: "/forum/article",
+        menuName: '帖子管理',
+        path: '/forum/article',
       },
       {
-        menuName: "评论管理",
-        path: "/forum/comment",
+        menuName: '评论管理',
+        path: '/forum/comment',
       },
       {
-        menuName: "板块管理",
-        path: "/forum/board",
+        menuName: '板块管理',
+        path: '/forum/board',
       },
     ],
   },
   {
-    menuName: "用户管理",
-    icon: "icon-user",
-    path: "/user",
+    menuName: '用户管理',
+    icon: 'icon-user',
+    path: '/user',
     children: [
       {
-        menuName: "用户列表",
-        path: "/user/list",
+        menuName: '用户列表',
+        path: '/user/list',
       },
     ],
   },
   {
-    menuName: "设置",
-    icon: "icon-settings",
-    path: "/setting",
+    menuName: '设置',
+    icon: 'icon-settings',
+    path: '/setting',
     children: [
       {
-        menuName: "系统设置",
-        path: "/setting/sys",
+        menuName: '系统设置',
+        path: '/setting/sys',
       },
     ],
-  }
+  },
 ]
 const menuMap = {}
 const init = () => {
-  menuList.forEach(item => {
+  menuList.forEach((item) => {
     defaultOpeneds.value.push(item.path)
-    item.children.forEach(subItem => {
+    item.children.forEach((subItem) => {
       menuMap[subItem.path] = subItem
     })
   })
@@ -147,7 +166,7 @@ const editTab = (targetKey, action) => {
       }
     })
   }
-  tabList.value = tabs.filter(tab => {
+  tabList.value = tabs.filter((tab) => {
     return tab.path != targetKey
   })
 
@@ -162,15 +181,15 @@ watch(
   (newVal, oldVal) => {
     defaultActive.value = newVal.path
     menuBreadCrumbList.value = route.matched
-    let currentMenu = tabList.value.find(item => {
+    let currentMenu = tabList.value.find((item) => {
       return item.path == defaultActive.value
     })
     if (!currentMenu) {
       tabList.value.push(menuMap[route.path])
     }
   },
-  { immediate: true, deep: true }
-);
+  { immediate: true, deep: true },
+)
 const asideWidth = ref(250)
 // 收起关闭的菜单
 const menuCollapse = ref(false)
@@ -183,10 +202,9 @@ const opMenu = () => {
     asideWidth.value = 200
   }
 }
-
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 //菜单收起样式
 .el-popper {
   border: none !important;
@@ -270,17 +288,15 @@ const opMenu = () => {
 
   .main-content {
     padding: 0px;
-
     .tag-content {
       .el-tabs--border-card {
         border: none;
       }
-
       .el-tabs__content {
-        display: none;
+        padding: 0;
+        padding-top: 10px;
       }
     }
-
     .content-body {
       overflow: hidden;
       padding: 10px 10px 5px 10px;
