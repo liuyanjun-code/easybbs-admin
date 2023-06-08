@@ -44,7 +44,7 @@ instance.interceptors.response.use(
     } else if (responseData.code === 901) {
       setTimeout(()=>{
         router.push('/login')
-      },2000)
+      },1000)
       return Promise.reject({ showError: true, msg: '登陆超时' })
     } else {
       if (errorCallback) {

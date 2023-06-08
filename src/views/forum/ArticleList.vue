@@ -200,10 +200,14 @@
       </Table>
     </div>
     <ArticleBoard ref="articleBoardRef" @reload="loadDataList"></ArticleBoard>
+    <ArticleAttachment ref="attachmenttRef"></ArticleAttachment>
+    <ArticleComment ref="commentRef"></ArticleComment>
   </div>
 </template>
 
 <script setup>
+import ArticleComment from './ArticleComment.vue';
+import ArticleAttachment from './ArticleAttachment.vue';
 import ArticleBoard from './ArticleBoard.vue';
 import { ref, reactive, getCurrentInstance ,toRaw} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -274,7 +278,7 @@ const columns = [
 const searchFormData = reactive({})
 const tabelData = ref({})
 const tableOptions = {
-  extHeight: 90,
+  extHeight: 100,
   selectType: 'checkbox',
 }
 const loadDataList = async () => {
