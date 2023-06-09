@@ -214,7 +214,6 @@ const getSetting = async () => {
       }
     }
   }
-  console.log(formData.value)
 }
 getSetting()
 

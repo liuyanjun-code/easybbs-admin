@@ -20,7 +20,7 @@ import Dialog from '@/components/Dialog.vue'
 import Avatar from '@/components/Avatar.vue'
 import Cover from '@/components/Cover.vue'
 import Table from '@/components/Table.vue'
-
+import CoverUpload from '@/components/CoverUpload.vue'
 const app = createApp(App)
 app.use(router)
 app.config.globalProperties.VueCookies = VueCookies
@@ -40,4 +40,5 @@ app.component('Dialog',Dialog)
 app.component('Avatar',Avatar)
 app.component('Cover',Cover)
 app.component('Table',Table)
+app.component('CoverUpload',CoverUpload)
 app.mount('#app')
