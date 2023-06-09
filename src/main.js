@@ -33,7 +33,7 @@ app.config.globalProperties.globalInfo={
   bodyWidth:1200,
   avatarUrl:"/api/file/getAvatar/",
   imageUrl:'/api/file/getImage/',
-  webDomain:'http://127.0.0.1:3004/'
+  webDomain:import.meta.env.VITE_WEB_DOMAIN
 }
 app.use(ElementPlus)
 app.component('Dialog',Dialog)
